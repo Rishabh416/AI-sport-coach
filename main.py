@@ -2,6 +2,7 @@ from fastapi import FastAPI, Form, Request
 import uvicorn
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.templating import Jinja2Templates
+import videoCap
 
 app = FastAPI()
 app.add_middleware(
@@ -17,6 +18,16 @@ templates = Jinja2Templates(directory="templates")
 @app.get('/')
 async def root(request: Request):
   return templates.TemplateResponse("index.html", {"request": request})
+
+capture = videoCap.videoRecorder()
+
+@app.get('/recording.html')
+async def root(request: Request):
+  print("working 2")
+  capture.recording()
+  print("working 3")
+  return templates.TemplateResponse("recording.html", {"request": request})
+
 
 if __name__ == "__main__":
     uvicorn.run("main:app", port=8000, reload=True)

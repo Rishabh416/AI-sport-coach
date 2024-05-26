@@ -1,30 +1,38 @@
 import cv2
 
-cap = cv2.VideoCapture(0)
+class videoRecorder:
+    def __init__(self):
+        self.cap = cv2.VideoCapture(0)
+        print("videocap")
 
-cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
-cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
+        self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
+        self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
+        print("videodimensions")
 
-fourcc = cv2.VideoWriter_fourcc('m', 'p', '4', 'v')
-writer = cv2.VideoWriter('sportVideo.mp4', fourcc, 30.0, (1280,720))
+        self.fourcc = cv2.VideoWriter_fourcc('m', 'p', '4', 'v')
+        self.writer = cv2.VideoWriter('sportVideo.mp4', self.fourcc, 30.0, (1280,720))
+        print("videowriter")
 
-recording = False
+        self.recording = False
 
-while True:
-    ret, frame = cap.read()
+    def recording(self):
+        self.recording = True
 
-    if ret:
-        cv2.imshow('recording', frame)
-        if recording:
-            writer.write(frame)
-        
-    key = cv2.waitKey(1)
-    if key == ord('q'):
-        break
-    elif key == ord('r'):
-        recording = not recording
-        print(recording)
+        while self.recording:
+            ret, frame = self.cap.read(self)
 
-cap.release()
-writer.release()
-cv2.destroyAllWindows()
+            if ret:
+                cv2.imshow('recording', frame)
+                if self.recording:
+                    self.writer.write(frame)
+           
+            key = cv2.waitKey(1)
+            if key == ord('q'):
+                break
+            elif key == ord('r'):
+                self.recording = False
+                print(self.recording)
+
+        self.cap.release()
+        self.capwriter.release()
+        cv2.destroyAllWindows()
