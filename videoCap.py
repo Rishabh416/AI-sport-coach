@@ -28,10 +28,9 @@ class videoRecorder:
            
             key = cv2.waitKey(1)
             if key == ord('q'):
-                break
-            elif key == ord('r'):
                 self.recording = False
                 print(self.recording)
+                break
 
         self.cap.release()
         self.capwriter.release()

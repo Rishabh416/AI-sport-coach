@@ -2,7 +2,9 @@ from fastapi import FastAPI, Form, Request
 import uvicorn
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.templating import Jinja2Templates
+
 import videoCap
+import gemini
 
 app = FastAPI()
 app.add_middleware(
@@ -15,18 +17,38 @@ app.add_middleware(
 
 templates = Jinja2Templates(directory="templates")
 
+capture = videoCap.videoRecorder()
+geminiInterface = gemini.geminiInterface()
+
 @app.get('/')
 async def root(request: Request):
   return templates.TemplateResponse("index.html", {"request": request})
 
-capture = videoCap.videoRecorder()
-
 @app.get('/recording.html')
-async def root(request: Request):
+async def recording(request: Request):
   print("working 2")
   capture.recording()
   print("working 3")
   return templates.TemplateResponse("recording.html", {"request": request})
+
+@app.get('/aicoach.html')
+async def aicoach(request: Request):
+  videoSave = geminiInterface.upload_to_gemini("sportVideo.mp4", mime_type="video/mp4")
+  geminiInterface.wait_for_files_active(videoSave)
+  chat_session = geminiInterface.model.start_chat(
+  history=[
+      {
+        "role": "user",
+        "parts": [
+          videoSave,
+        ],
+      },
+    ]
+  )
+  response = chat_session.send_message("Describe what you see in this video")
+  print(response.text)
+  
+  return templates.TemplateResponse("aicoach.html", {"request": request})
 
 
 if __name__ == "__main__":
