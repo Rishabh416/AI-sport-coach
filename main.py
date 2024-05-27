@@ -27,7 +27,7 @@ async def root(request: Request):
 @app.get('/recording.html')
 async def recording(request: Request):
   print("working 2")
-  capture.recording()
+  capture.startRecording()
   print("working 3")
   return templates.TemplateResponse("recording.html", {"request": request})
 

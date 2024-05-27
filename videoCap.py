@@ -15,11 +15,11 @@ class videoRecorder:
 
         self.recording = False
 
-    def recording(self):
+    def startRecording(self):
         self.recording = True
 
         while self.recording:
-            ret, frame = self.cap.read(self)
+            ret, frame = self.cap.read()
 
             if ret:
                 cv2.imshow('recording', frame)
@@ -33,5 +33,5 @@ class videoRecorder:
                 break
 
         self.cap.release()
-        self.capwriter.release()
+        self.writer.release()
         cv2.destroyAllWindows()
