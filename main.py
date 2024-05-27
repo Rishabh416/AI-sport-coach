@@ -45,7 +45,7 @@ async def aicoach(request: Request):
       },
     ]
   )
-  response = chat_session.send_message("Describe what you see in this video")
+  response = chat_session.send_message("Identify the sport and skill present in this video. Provide 2 positives and 2 improvements in regards to the skill shown. Also provide a few ways in which the specific skill can be trained and improved.")
   print(response.text)
   
   return templates.TemplateResponse("aicoach.html", {"request": request, "response": response.text})
