@@ -48,7 +48,7 @@ async def aicoach(request: Request):
   response = chat_session.send_message("Describe what you see in this video")
   print(response.text)
   
-  return templates.TemplateResponse("aicoach.html", {"request": request})
+  return templates.TemplateResponse("aicoach.html", {"request": request, "response": response.text})
 
 
 if __name__ == "__main__":
