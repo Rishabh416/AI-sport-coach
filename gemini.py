@@ -7,7 +7,7 @@ import google.generativeai as genai
 class geminiInterface:
   def __init__(self):
     load_dotenv()
-    api_key = os.getenv('API_KEY')
+    api_key = os.getenv('API_KEY') # API isn't accessible from .env
     genai.configure(api_key=api_key)
     generation_config = {
       "temperature": 1,
