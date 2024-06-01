@@ -57,24 +57,3 @@ class geminiInterface:
       if file.state.name != "ACTIVE":
         raise Exception(f"File {file.name} failed to process")
     print("...all files ready")
-
-
-
-# video_drive0 = upload_to_gemini("sportVideo.mp4", mime_type="video/mp4")
-
-# wait_for_files_active(video_drive0)
-
-# chat_session = model.start_chat(
-#   history=[
-#     {
-#       "role": "user",
-#       "parts": [
-#         video_drive0,
-#       ],
-#     },
-#   ]
-# )
-
-# response = chat_session.send_message("Describe what you see in this video")
-
-# print(response.text)
