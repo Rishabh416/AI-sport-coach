@@ -1,13 +1,11 @@
 import os
-from dotenv import load_dotenv
 import time
 
 import google.generativeai as genai
 
 class geminiInterface:
   def __init__(self):
-    load_dotenv()
-    api_key = os.getenv('API_KEY') # API isn't accessible from .env
+    api_key = 'API_KEY' # API isn't accessible from .env
     genai.configure(api_key=api_key)
     generation_config = {
       "temperature": 1,
